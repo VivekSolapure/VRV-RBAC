@@ -1,0 +1,81 @@
+
+.Navbar_main{
+    max-width: 100%;
+    max-height: 5rem;
+
+    /* background-color: #545454; */
+    justify-content: center;
+    display: flex;
+}
+.Navbar_container{
+    width: 80%;
+    display: flex;
+    background-color: #fff;
+    justify-content: space-between;
+    align-items: center;
+}
+.Navbar_logo{
+
+}
+.Navbar_tabs{
+    font-family: "Inter", sans-serif;
+    display: flex;
+    justify-content: space-between;
+    /* padding: 0 12% 0 12%; */
+    /* background-color: #e47171; */
+    width: 23%;
+
+}
+
+.tab1{
+    font-weight: bold;
+
+}
+.tab2{
+    color: #8987A1;
+}
+.Navbar_buttons{
+    font-family: "Raleway", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+
+}
+#active{
+    width: 132px;
+    cursor: pointer;
+    height: 48px;
+    display: flex;
+    background-color: #4E47FF;
+    border-radius: 0.5rem;
+    justify-content: center;
+    color: #fff ;
+    font-size: 16px;
+    font-weight: bold;
+    align-items: center;
+    transition: 0.2s;
+}
+#active:hover{
+    background-color: #fff;
+    color: black;
+    border: 1px solid black;
+    box-sizing: border-box;
+}
+#deactive{
+    /* border: 1px solid black; */
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    color: #8987A1;
+    width: 132px;
+    height: 48px;
+    border-radius: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    transition:all 300ms ease-out;
+
+}
+#deactive:hover{
+    text-decoration: underline;
+}
