@@ -1,0 +1,57 @@
+.home_notesContainer {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+  .home_notesList {
+    width: 260px;
+    cursor: pointer;
+    height: fit-content;
+    gap: 30px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    background-color: #eef6d0;
+    padding: 46px 18px;
+    border: 1px solid #25243200;
+    font-family: "Inter", sans-serif;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
+    color: #252432;
+    transition: 300ms;
+  }
+  .home_notesList:hover {
+    background-color: #fff;
+    border: 1px solid #252432;
+    box-sizing: border-box;
+  }
+  .home_noteHeading {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .home_noteName {
+    width: fit-content;
+    font-weight: 700;
+    font-size: 20px;
+  }
+  .home_notePara {
+    max-height: 85px; /* Set the maximum height */
+    overflow: hidden;
+    line-height: 21px;
+    font-size: 14px;
+    opacity: 0.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+  }
+  #newNotePara {
+    width: 608px;
+    height: 288px;
+    box-decoration-break: none;
+    padding: 10px 10px 0 10px;
+    font-size: 16px;
+  }

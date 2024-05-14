@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import './PopupForNotes.css'
 
 function PopupForNotes(props) {
   const inputFileRef = useRef(null);
