@@ -14,7 +14,6 @@ body {
     align-items: center;
     justify-content: center;
     font-family: "Inter",sans-serif;
-
 }
 .acticehome_popup {
     display: flex;
@@ -29,6 +28,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 16px;
+    position: relative;
 }
 #newNoteTitle{
   width: 608px;
@@ -66,6 +66,51 @@ input{
   gap: 34px;
   background-color: #eeeefa;
 }
+.home_saveBtn{
+  width: 88px ;
+  height: 31px;
+  color: #fff;
+  display: flex;
+  position: absolute;
+  bottom: 52px;
+  align-items: center;
+  border: 1px solid transparent; /* Add initial border */
+
+  justify-content: center;
+  background-color: #4285F4;
+  border-radius: 5px;
+  cursor: pointer;
+
+  right: 85px;
+}
+.home_saveBtn:hover{
+  border: 1px solid #4285F4;
+  background-color: #fff;
+  color: #4285F4;
+  box-sizing: border-box;
+}
+
+.home_deleteBtn{
+  width: 88px ;
+  height: 31px;
+  color: #d14343;
+  border: 1px solid transparent; /* Add initial border */
+  display: flex;
+  position: absolute;
+  bottom: 52px;
+  align-items: center;
+  justify-content: center;
+  /* background-color: #4285F4; */
+  border-radius: 5px;
+  right: 205px;
+  transition: 300ms;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.home_deleteBtn:hover{
+  border: 1px solid #d14343;
+  box-sizing: border-box;
+}
 
 
 .home_main {
@@ -74,7 +119,7 @@ input{
   justify-content: center;
 }
 .home_container {
-  width: 75%;
+  width: 80%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -158,15 +203,14 @@ input{
   font-size: 20px;
 }
 .home_notePara {
-  width: 100%;
-  display: flex;
+    max-height: 85px; /* Set the maximum height */
+  overflow: hidden;
   line-height: 21px;
   font-size: 14px;
   opacity: 0.5;
-  height: 85px;
-  overflow: hidden;
-  /* white-space: nowrap; */
-  text-overflow:ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Number of lines to show */
+  -webkit-box-orient: vertical;
   
 }
 .home_seperation {
