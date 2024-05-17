@@ -76,12 +76,7 @@ function NoteCard() {
 
     const firebase = useFirebase();
 
-    const triggerFileInputClick = () => {
-        if (inputFileRef.current) {
-            inputFileRef.current.click();
-        }
-    }
-    let count = 0
+
     const postDatas = async () => {
         let ccurrentDate = new Date();
         let monthNames = [
