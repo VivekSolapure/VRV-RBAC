@@ -55,6 +55,7 @@
   .home_TodoListAdd {
     display: flex;
     width: 224px;
+    height: 150px;
     align-items: center;
     justify-content: center;
     border-radius: 10px;

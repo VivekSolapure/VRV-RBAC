@@ -1,13 +1,42 @@
 import React, { useState, useRef, useEffect } from 'react';
-import './PopupForNotes.css'
+import './PopupForTodo.css'
 import { FirebaseProvider, db, storage, useFirebase } from "../context/Firebase";
 // import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import 'firebase/storage';
 import { child, get, ref } from "firebase/database";
 import { database } from "../context/Firebase";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import TimePicker from 'react-time-picker';
+import 'react-time-picker/dist/TimePicker.css';
+
+function PopupForTodo(props) {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState(null);
+  const [triggerTime, settriggerTime] = useState(false)
+  const [trigerDate, settrigerDate] = useState(false)
+
+  const handleDateClick = () => {
+    // Code to focus on date picker
+    // For example, you can use refs
+    settrigerDate(true)
+  };
+
+  const handleTimeClick = () => {
+    // Code to focus on time picker
+    // For example, you can use refs
+    settriggerTime(true)
+  };
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+  };
 
 
-function PopupForNotes(props) {
   const inputFileRef = useRef(null);
   const [Post_textarea, setPost_textarea] = useState("");
   const TxtChange = (event) => {
@@ -36,7 +65,7 @@ function PopupForNotes(props) {
     }
   }, []);
   const incrementCount = () => {
-    const updatedCounts = count+1;
+    const updatedCounts = count + 1;
     setcount(updatedCounts);
     // Store count in localStorage
     localStorage.setItem('count', updatedCounts);
@@ -77,14 +106,17 @@ function PopupForNotes(props) {
       }
     } else {
       incrementCount();
-      firebase.putData(`Notes/note${currentTime}`, {
+      firebase.putData(`Todo/todos${currentTime}`, {
         title: Post_txtTitle,
-        description: Post_textarea,
         postuploadedon: formattedDate,
-        key:`note${currentTime}`
+        date:selectedDate.toDateString(),
+        time:selectedTime,
+        key: `todos${currentTime}`
+      }).then(()=>{
+        window.location.reload();
+
       })
     }
-    window.location.reload();
 
   }
 
@@ -93,7 +125,7 @@ function PopupForNotes(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        get(child(ref(database), 'Notes')).then(snapshot => {
+        get(child(ref(database), 'Todo')).then(snapshot => {
           const data = snapshot.val();
           if (data) {
             setpostData(data);
@@ -109,45 +141,56 @@ function PopupForNotes(props) {
   }, []);
   console.log(postData);
 
-  // const [fileName, setfileName] = useState(null)
-  // const handleFileChange = () => {
-  //   const files = inputFileRef.current.files;
-  //   console.log(files);
-  //   const names = [...files].map(file => file.name).join(", ");
-  //   setfileName(names)
-  // };
   return (
     <>
-      
+      <textarea
+        name="newNoteTitle"
+        placeholder="Todo Name"
+        id="newNoteTitlee"
+        onChange={TxtTitle}
+        key={2}
+      ></textarea>
+      <div className="calender">
+        <div className="cakenderLogo"><img src="./calender.svg" alt="" /></div>
+        <div className="todoWrapper">
+          <div className="todoDate" onClick={handleDateClick}>{selectedDate ? selectedDate.toDateString() : 'Select Date'}</div>
+          <div className="todoDivider"></div>
+          <div className="todoTime" onClick={handleTimeClick}>{selectedTime || 'Select Time'}</div>
+        </div>
+      </div>
+      <div className="home_saveBtn" onClick={postDatas}>Save</div>
+      {/* <div className="home_deleteBtn">Delete</div> */}
+
+      {/* Date Picker */}
+      {trigerDate &&
+        <DatePicker
+          selected={selectedDate}
+          onChange={handleDateChange}
+          dateFormat="dd/MM/yyyy"
+          placeholderText="Select Date"
+          style={{ display: 'none' }} // Hidden initially
+        />
+      }
 
 
-            <>
-                <textarea
-                  name="newNoteTitle"
-                  placeholder="Title"
-                  id="newNoteTitle"
-                  onChange={TxtTitle}
-                  key={2}
-                ></textarea>
-                <textarea
-                  name="newNotePara"
-                  placeholder="Type something here..."
-                  id="newNotePara"
-                  onChange={TxtChange}
-                  key={2}
-                ></textarea>
-                <div className="home_saveBtn" onClick={postDatas} >Save</div>
-                {/* <div className="home_deleteBtn">Delete</div> */}
-            </>
-      
-
+      {/* Time Picker */}
+      {triggerTime &&
+        <TimePicker
+          value={selectedTime}
+          onChange={handleTimeChange}
+          disableClock={true}
+          format="hh:mm a"
+          placeholder="Select Time"
+          style={{ display: 'none' }} // Hidden initially
+        />
+      }
 
     </>
   )
 }
 
-export default PopupForNotes
-    {/* <div className="newNoteDropFile" onClick={triggerFileInputClick}>
+export default PopupForTodo
+{/* <div className="newNoteDropFile" onClick={triggerFileInputClick}>
             <label htmlFor="input-file">
               <div id="img-view">
                 <input type="file" ref={inputFileRef} onChange={handleFileChange} hidden multiple />

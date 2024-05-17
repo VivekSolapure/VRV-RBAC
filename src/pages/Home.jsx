@@ -40,13 +40,6 @@ function Home() {
           </div>
           <div className="home_notesContainer">
             <NoteCard></NoteCard>
-            <NoteCard></NoteCard>
-            <NoteCard></NoteCard>
-            <NoteCard></NoteCard>
-            <NoteCard></NoteCard>
-            <NoteCard></NoteCard>
-            <NoteCard></NoteCard>
-            <NoteCard></NoteCard>
           </div>
           <div className="home_seperation"><div className='home_sperationLine'></div></div>
           <TodoCard></TodoCard>

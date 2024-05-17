@@ -23,16 +23,20 @@
     justify-content: space-between;
     /* padding: 0 12% 0 12%; */
     /* background-color: #e47171; */
-    width: 23%;
+    width: 17%;
+    text-decoration: none;
 
 }
 
-.tab1{
+.tab1 a{
     font-weight: bold;
+    text-decoration: none;
 
 }
-.tab2{
+.tab2 a{
     color: #8987A1;
+    text-decoration: none;
+
 }
 .Navbar_buttons{
     font-family: "Raleway", sans-serif;
