@@ -1,19 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
-import PopupForNotes from './PopupForTodo';
+import './NoteCard.css'
 import { child, get, ref, remove } from "firebase/database";
 import { database } from "../context/Firebase";
-import { FirebaseProvider, db, storage, useFirebase } from "../context/Firebase";
+import { useFirebase } from "../context/Firebase";
 
-import './NoteCard.css'
-
+import './NoteCard.css';
 
 function NoteCard() {
-
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const [whichnotekey, setwhichnotekey] = useState({})
-    const [whichnotepara, setwhichnotepara] = useState('')
-    const [whichnotetitle, setwhichnotetitle] = useState('')
-    const popupRef = useRef(null); // Initialize with null
+    const [whichnotekey, setWhichnotekey] = useState('');
+    const [whichnotepara, setWhichnotepara] = useState('');
+    const [whichnotetitle, setWhichnotetitle] = useState('');
+    const [postData, setPostData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const popupRef = useRef(null);
+
     useEffect(() => {
         function handleClickOutside(event) {
             if (popupRef.current && !popupRef.current.contains(event.target)) {
@@ -27,165 +28,124 @@ function NoteCard() {
         };
     }, []);
 
-
-    const openPopup = (post, postData) => {
-        console.log('Whichnotekey', Object.keys(post.key))
-        setwhichnotekey(post.key);
-        setwhichnotepara(post.description);
-        setwhichnotetitle(post.title);
+    const openPopup = (post) => {
+        setWhichnotekey(post.key);
+        setWhichnotepara(post.description);
+        setWhichnotetitle(post.title);
         setIsPopupOpen(true);
     };
-    // console.log('Whichnote', );
-    const [postData, setpostData] = useState([]);
-    const [loading, setLoading] = useState(true);
-
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                get(child(ref(database), 'Notes')).then(snapshot => {
-                    const data = snapshot.val();
-                    if (data) {
-                        setpostData(data);
-                    }
-                })
+                const snapshot = await get(child(ref(database), 'Notes'));
+                const data = snapshot.val();
+                if (data) {
+                    setPostData(data);
+                }
             } catch (error) {
                 console.error("Error fetching data:", error);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchData();
-        const timer = setTimeout(() => {
-            setLoading(false);
-        }, 3000); // 5 seconds
-
-        return () => clearTimeout(timer);
-
     }, []);
-    console.log(postData);
 
-    const [Post_textarea, setPost_textarea] = useState("");
-    const TxtChange = (event) => {
-        setwhichnotepara(event.target.value);
+    const handleTxtChange = (event) => {
+        setWhichnotepara(event.target.value);
     };
 
-    const [Post_txtTitle, setPost_txtTile] = useState("");
-    const TxtTitle = (event) => {
-        setwhichnotetitle(event.target.value);
+    const handleTxtTitleChange = (event) => {
+        setWhichnotetitle(event.target.value);
     };
 
     const firebase = useFirebase();
 
-
     const postDatas = async () => {
-        let ccurrentDate = new Date();
-        let monthNames = [
+        const ccurrentDate = new Date();
+        const monthNames = [
             "January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December"
         ];
-        let monthIndex = ccurrentDate.getMonth();
-        let monthName = monthNames[monthIndex];
-        let dday = ccurrentDate.getDate();
-        let dyear = ccurrentDate.getFullYear();
-        dday = dday < 10 ? '0' + dday : dday;
-        let formattedDate = `${dday} ${monthName} ${dyear.toString().slice(-2)}`;
-        let time = Date.now();
+        const monthName = monthNames[ccurrentDate.getMonth()];
+        const dday = (`0${ccurrentDate.getDate()}`).slice(-2);
+        const formattedDate = `${dday} ${monthName} ${ccurrentDate.getFullYear().toString().slice(-2)}`;
 
-        // Get current date and time
-        var currentDate = new Date();
-
-        // Extract individual components
-        var year = currentDate.getFullYear();
-        var month = ('0' + (currentDate.getMonth() + 1)).slice(-2); // Adding 1 to month since it is zero-based
-        var day = ('0' + currentDate.getDate()).slice(-2);
-        var hour = ('0' + currentDate.getHours()).slice(-2);
-        var minute = ('0' + currentDate.getMinutes()).slice(-2);
-        var second = ('0' + currentDate.getSeconds()).slice(-2);
-
-        // Concatenate components into desired format
-        var currentTime = year + month + day + hour + minute + second;
-
-        if (((whichnotetitle || whichnotepara) === '')) {
-            alert("Please Fill all ");
-            if (window.confirm) {
-                window.location.reload()
-            }
-        } else {
-            firebase.putData(`Notes/${whichnotekey}`, {
-                title: whichnotetitle,
-                description: whichnotepara,
-                postuploadedon: formattedDate,
-                key: whichnotekey
-            })
+        if (!whichnotetitle || !whichnotepara) {
+            alert("Please Fill all fields");
+            return;
         }
-        window.location.reload();
-    }
 
-    const deleteNote = () => {
-        const delNodeRef = ref(database, `Notes/${whichnotekey}`)
-        remove(delNodeRef).then(() => {
+        await firebase.putData(`Notes/${whichnotekey}`, {
+            title: whichnotetitle,
+            description: whichnotepara,
+            postuploadedon: formattedDate,
+            key: whichnotekey
+        });
+
+        window.location.reload();
+    };
+
+    const deleteNote = async () => {
+        const delNodeRef = ref(database, `Notes/${whichnotekey}`);
+        try {
+            await remove(delNodeRef);
             alert('Note deleted successfully');
-        })
-            .catch((error) => {
-                alert('Error deleting node:', error);
-            });
-        window.location.reload();
-
-    }
+            window.location.reload();
+        } catch (error) {
+            alert('Error deleting note:', error);
+        }
+    };
 
     return (
         <>
-
             <div className={`home_popup ${isPopupOpen ? 'acticehome_popup' : ''}`} >
                 <section ref={popupRef} className="home_popupForNotes">
                     <textarea
                         name="newNoteTitle"
                         placeholder="Title"
                         id="newNoteTitle"
-                        onChange={TxtTitle}
+                        onChange={handleTxtTitleChange}
                         value={whichnotetitle}
                     ></textarea>
                     <textarea
                         name="newNotePara"
                         placeholder="Type something here..."
                         id="newNotePara"
-                        onChange={TxtChange}
+                        onChange={handleTxtChange}
                         value={whichnotepara}
                     ></textarea>
-                    <div className="home_saveBtn" onClick={postDatas} >Save</div>
+                    <div className="home_saveBtn" onClick={postDatas}>Save</div>
                     <div className="home_deleteBtn" onClick={deleteNote}>Delete</div>
                 </section>
-
             </div>
+            <div className="home_notesContainer">
+
             {loading ? (
                 <h1>Loading...</h1>
             ) : (
-                Object.values(postData).length === 0 ? (
+                Object.keys(postData).length === 0 ? (
                     <h1>No data found</h1>
                 ) : (
-                    Object.values(postData).map((post, id) => (
-                        <>
-                            <div className="home_notesContainer">
-
-                                <div className="home_notesList" onClick={() => openPopup(post, postData)} key={id}>
-                                    <div className="home_noteHeading">
-                                        <div className="home_noteName">{post.title}</div>
-                                        <div className="home_noteEditLogo">
-                                            <img src="./edit.svg" alt="" />
-                                        </div>
+                    Object.entries(postData).map(([key, post]) => (
+                            <div className="home_notesList" onClick={() => openPopup(post)} key={key}>
+                                <div className="home_noteHeading">
+                                    <div className="home_noteName">{post.title}</div>
+                                    <div className="home_noteEditLogo">
+                                        <img src="./edit.svg" alt="" />
                                     </div>
-                                    <div className="home_notePara">{post.description}</div>
                                 </div>
+                                <div className="home_notePara">{post.description}</div>
                             </div>
-
-
-                        </>
-                    )))
-            )
-            }
+                    ))
+                )
+            )}
+                        </div>
 
         </>
-    )
+    );
 }
 
-export default NoteCard
+export default NoteCard;

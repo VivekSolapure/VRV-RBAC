@@ -9,7 +9,6 @@
   .home_notesList {
     width: 260px;
     cursor: pointer;
-    height: fit-content;
     gap: 30px;
     border-radius: 10px;
     display: flex;
