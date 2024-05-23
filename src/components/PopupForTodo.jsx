@@ -50,26 +50,26 @@ function PopupForTodo(props) {
 
   const firebase = useFirebase();
 
-  const triggerFileInputClick = () => {
-    if (inputFileRef.current) {
-      inputFileRef.current.click();
-    }
-  }
-  const [count, setcount] = useState(0)
-  console.log(count);
-  useEffect(() => {
-    // Retrieve count from localStorage on component mount
-    const storedCounts = localStorage.getItem('count');
-    if (storedCounts !== null) {
-      setcount(parseInt(storedCounts));
-    }
-  }, []);
-  const incrementCount = () => {
-    const updatedCounts = count + 1;
-    setcount(updatedCounts);
-    // Store count in localStorage
-    localStorage.setItem('count', updatedCounts);
-  };
+  // const triggerFileInputClick = () => {
+  //   if (inputFileRef.current) {
+  //     inputFileRef.current.click();
+  //   }
+  // }
+  // const [count, setcount] = useState(0)
+  // console.log(count);
+  // useEffect(() => {
+  //   // Retrieve count from localStorage on component mount
+  //   const storedCounts = localStorage.getItem('count');
+  //   if (storedCounts !== null) {
+  //     setcount(parseInt(storedCounts));
+  //   }
+  // }, []);
+  // const incrementCount = () => {
+  //   const updatedCounts = count + 1;
+  //   setcount(updatedCounts);
+  //   // Store count in localStorage
+  //   localStorage.setItem('count', updatedCounts);
+  // };
 
   const postDatas = async () => {
     let ccurrentDate = new Date();
@@ -105,7 +105,7 @@ function PopupForTodo(props) {
         window.location.reload()
       }
     } else {
-      incrementCount();
+      // incrementCount();
       firebase.putData(`Todo/todos${currentTime}`, {
         title: Post_txtTitle,
         postuploadedon: formattedDate,

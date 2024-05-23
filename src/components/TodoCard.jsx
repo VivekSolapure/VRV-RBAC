@@ -9,6 +9,8 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
+import { format } from 'date-fns';
+
 
 function TodoCard() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -41,8 +43,6 @@ function TodoCard() {
         setwhichnotetitle(post.title);
         setwhichnotedate(post.date)
         setwhichnotetime(post.time)
-        setSelectedDate(post.date);
-        setSelectedTime(post.time);
         setIsPopupOpen(true);
     };
 
@@ -75,10 +75,12 @@ function TodoCard() {
         return () => clearTimeout(timer);
     }, []);
 
-    const [selectedDate, setSelectedDate] = useState('');
-    const [selectedTime, setSelectedTime] = useState('');
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [selectedTime, setSelectedTime] = useState(null);
     const [triggerTime, settriggerTime] = useState(false)
     const [trigerDate, settrigerDate] = useState(false)
+    // const formattedDate = selectedDate ? format(selectedDate, 'dd/MM/yyyy') : '';
+    // const formattedTime = selectedTime ? format(selectedTime, 'hh:mm a') : '';
 
     const handleDateClick = () => {
         settrigerDate(true)
@@ -95,18 +97,19 @@ function TodoCard() {
     const handleTimeChange = (time) => {
         setSelectedTime(time);
     };
+    const firebase=useFirebase();
 
     const postDatas = async () => {
-        let formattedDate = `${selectedDate} ${selectedTime}`;
+        // let formattedDate = `${selectedDate} ${selectedTime}`;
         if ((whichnotetitle || whichnotepara) === '') {
             alert("Please fill all fields");
             return;
         }
         try {
-            await database.ref(`Todo/${whichnotekey}`).set({
+            firebase.putData(`Todo/${whichnotekey}`,{
                 title: whichnotetitle,
                 postuploadedon: new Date().toISOString(),
-                date: selectedDate,
+                date: selectedDate.toDateString(),
                 time: selectedTime,
                 key: whichnotekey
             });
@@ -149,9 +152,9 @@ function TodoCard() {
                     <div className="calender">
                         <div className="cakenderLogo"><img src="./calender.svg" alt="" /></div>
                         <div className="todoWrapper">
-                            <div className="todoDate" onClick={handleDateClick}>{selectedDate ? selectedDate : whichnotedate}</div>
+                            <div className="todoDate" onClick={handleDateClick}>{selectedDate ? selectedDate.toDateString(): whichnotedate}</div>
                             <div className="todoDivider"></div>
-                            <div className="todoTime" onClick={handleTimeClick}>{selectedTime || whichnotetime}</div>
+                            <div className="todoTime" onClick={handleTimeClick}>{selectedTime ? selectedTime: whichnotetime}</div>
                         </div>
                     </div>
                     <div className="home_saveBtn" onClick={postDatas}>Save</div>

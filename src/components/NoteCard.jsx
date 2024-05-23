@@ -113,6 +113,7 @@ function NoteCard() {
         } else {
             firebase.putData(`Notes/${whichnotekey}`, {
                 title: whichnotetitle,
+                description: whichnotepara,
                 postuploadedon: formattedDate,
                 key: whichnotekey
             })
@@ -134,50 +135,53 @@ function NoteCard() {
 
     return (
         <>
+
+            <div className={`home_popup ${isPopupOpen ? 'acticehome_popup' : ''}`} >
+                <section ref={popupRef} className="home_popupForNotes">
+                    <textarea
+                        name="newNoteTitle"
+                        placeholder="Title"
+                        id="newNoteTitle"
+                        onChange={TxtTitle}
+                        value={whichnotetitle}
+                    ></textarea>
+                    <textarea
+                        name="newNotePara"
+                        placeholder="Type something here..."
+                        id="newNotePara"
+                        onChange={TxtChange}
+                        value={whichnotepara}
+                    ></textarea>
+                    <div className="home_saveBtn" onClick={postDatas} >Save</div>
+                    <div className="home_deleteBtn" onClick={deleteNote}>Delete</div>
+                </section>
+
+            </div>
             {loading ? (
-                        <h1>Loading...</h1>
-                    ) : (
-                        Object.values(postData).length === 0 ? (
-                            <h1>No data found</h1>
-                        ) : (
+                <h1>Loading...</h1>
+            ) : (
+                Object.values(postData).length === 0 ? (
+                    <h1>No data found</h1>
+                ) : (
                     Object.values(postData).map((post, id) => (
                         <>
-                            <div className={`home_popup ${isPopupOpen ? 'acticehome_popup' : ''}`} key={id}>
-                                <section ref={popupRef} className="home_popupForNotes">
-                                    <textarea
-                                        name="newNoteTitle"
-                                        placeholder="Title"
-                                        id="newNoteTitle"
-                                        onChange={TxtTitle}
-                                        key={id}
-                                        value={whichnotetitle}
-                                    ></textarea>
-                                    <textarea
-                                        name="newNotePara"
-                                        placeholder="Type something here..."
-                                        id="newNotePara"
-                                        onChange={TxtChange}
-                                        key={id}
-                                        value={whichnotepara}
-                                    ></textarea>
-                                    <div className="home_saveBtn" onClick={postDatas} >Save</div>
-                                    <div className="home_deleteBtn" onClick={deleteNote}>Delete</div>
-                                </section>
+                            <div className="home_notesContainer">
 
-                            </div>
-                            <div className="home_notesList" onClick={() => openPopup(post, postData)} key={id}>
-                                <div className="home_noteHeading">
-                                    <div className="home_noteName">{post.title}</div>
-                                    <div className="home_noteEditLogo">
-                                        <img src="./edit.svg" alt="" />
+                                <div className="home_notesList" onClick={() => openPopup(post, postData)} key={id}>
+                                    <div className="home_noteHeading">
+                                        <div className="home_noteName">{post.title}</div>
+                                        <div className="home_noteEditLogo">
+                                            <img src="./edit.svg" alt="" />
+                                        </div>
                                     </div>
+                                    <div className="home_notePara">{post.description}</div>
                                 </div>
-                                <div className="home_notePara">{post.description}</div>
                             </div>
+
 
                         </>
                     )))
-                )
+            )
             }
 
         </>

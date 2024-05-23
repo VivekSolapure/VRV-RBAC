@@ -38,9 +38,7 @@ function Home() {
             <div className="home_headName">Notes Master</div>
             <div className="home_createBtn" onClick={openPopup}>Create</div>
           </div>
-          <div className="home_notesContainer">
             <NoteCard></NoteCard>
-          </div>
           <div className="home_seperation"><div className='home_sperationLine'></div></div>
           <TodoCard></TodoCard>
         </div>
