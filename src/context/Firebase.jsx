@@ -17,6 +17,8 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 export const database = getDatabase(firebaseApp);
+const messaing=getMessaging(firebaseApp)
+
 const FirebaseContext = createContext(null);
 
 export const useFirebase = () => useContext(FirebaseContext)

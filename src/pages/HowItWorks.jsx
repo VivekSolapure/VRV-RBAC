@@ -27,14 +27,14 @@ const Guide = () => {
                 {selectedSection === 'Introduction' && (
                     <div>
                         <h2>Introduction</h2>
-                        <p>Welcome to User Master, your user-friendly web platform designed to simplify User-taking and task management. <br />This guide will help you get started with User Master and make the most out of its features.</p>
+                        <p>Welcome to Note Master, your user-friendly web platform designed to simplify note-taking and task management. <br />This guide will help you get started with Note Master and make the most out of its features.</p>
                     </div>
                 )}
                 {selectedSection === 'Getting Started' && (
                     <div>
                         <h2>Getting Started</h2>
                         <p>Logging In<br />
-                            1.Visit the User Master website.<br />
+                            1.Visit the Note Master website.<br />
                             2. Click on the "Login" button.<br />
                             3.Enter your username and password.<br />
                             4.Click "Login" to access your account.<br />
@@ -50,17 +50,17 @@ const Guide = () => {
                 {selectedSection === 'Features And Functionality' && (
                     <div>
                         <h2>Features And Functionality</h2>
-                        <p>Text Users <br />
-                            Creating a User <br />
-                            Click on the "Text Users" interface. <br />
-                            Click the "+" button to create a new User. <br />
-                            Enter your User title and content. <br />
-                            Click "Save" to save your User. <br />
+                        <p>Text Notes <br />
+                            Creating a Note <br />
+                            Click on the "Text Notes" interface. <br />
+                            Click the "+" button to create a new note. <br />
+                            Enter your note title and content. <br />
+                            Click "Save" to save your note. <br />
                         </p>
                         <p id='two'>
-                            Organizing Users <br />
-                            To organize your Users, use the sidebar to create folders. <br />
-                            Drag and drop Users into the desired folders for organization. <br />
+                            Organizing Notes <br />
+                            To organize your notes, use the sidebar to create folders. <br />
+                            Drag and drop notes into the desired folders for organization. <br />
                         </p>
                     </div>
                 )}
@@ -70,7 +70,7 @@ const Guide = () => {
                         <p>Adding Tasks <br />
                             1.Navigate to the "Task Management" interface.<br />
                             2.Click the "+" button to add a new task.<br />
-                            3.Enter the task details, including title, description, deadline, and associated Users.<br />
+                            3.Enter the task details, including title, description, deadline, and associated notes.<br />
                             4.Click "Save" to add the task.</p>
                         <p id='two'>
                             Organizing Tasks <br />
@@ -84,7 +84,7 @@ const Guide = () => {
                         <h2>Reminder</h2>
                         <p>Setting Reminders <br />
                             1.Click on the "Reminders" icon. <br />
-                            2.Choose the task or User you want to set a reminder for. <br />
+                            2.Choose the task or note you want to set a reminder for. <br />
                             3.Select the date and time for the reminder.  <br />
                             4.Click "Set Reminder" to schedule the reminder.</p>
                     </div>

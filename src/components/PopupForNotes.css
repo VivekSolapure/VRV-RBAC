@@ -1,0 +1,102 @@
+.home_popup {
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #00000017;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    align-items: center;
+    justify-content: center;
+    font-family: "Inter", sans-serif;
+  }
+  .acticehome_popup {
+    display: flex;
+  }
+  
+  .home_popupForNotes {
+    width: 800px;
+    height: 587px;
+    background-color: #fff;
+    font-family: "Inter", sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+  }
+  #newNoteTitle {
+    width: 608px;
+    height: 40px;
+    box-decoration-break: none;
+    padding: 10px 10px 0 10px;
+  }
+  #newNoteTitle,
+  #newNoteTitle,
+  ::placeholder {
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+  }
+  input {
+    /* opacity: 0; */
+    width: 100%;
+    height: 100%;
+  }
+  .newNoteDropFile {
+    width: 222px;
+    height: 113px;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 34px;
+    background-color: #eeeefa;
+  }
+  .home_saveBtn {
+    width: 88px;
+    height: 31px;
+    color: #fff;
+    display: flex;
+    position: absolute;
+    bottom: 52px;
+    align-items: center;
+    border: 1px solid transparent; /* Add initial border */
+  
+    justify-content: center;
+    background-color: #4285f4;
+    border-radius: 5px;
+    cursor: pointer;
+  
+    right: 85px;
+  }
+  .home_saveBtn:hover {
+    border: 1px solid #4285f4;
+    background-color: #fff;
+    color: #4285f4;
+    box-sizing: border-box;
+  }
+  
+  .home_deleteBtn {
+    width: 88px;
+    height: 31px;
+    color: #d14343;
+    border: 1px solid transparent; /* Add initial border */
+    display: flex;
+    position: absolute;
+    bottom: 52px;
+    align-items: center;
+    justify-content: center;
+    /* background-color: #4285F4; */
+    border-radius: 5px;
+    right: 205px;
+    transition: 300ms;
+    box-sizing: border-box;
+    cursor: pointer;
+  }
+  .home_deleteBtn:hover {
+    border: 1px solid #d14343;
+    box-sizing: border-box;
+  }
+  
