@@ -1,0 +1,179 @@
+.home_popup {
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #00000017;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+}
+
+.acticehome_popup {
+  display: flex;
+}
+
+.home_popupForUsers {
+  width: 40%;
+  height: 80%;
+  border-radius: 1rem;
+  background-color: #fff;
+  font-family: "Inter", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+#newUserTitle {
+  width: 90%; /* Adjust width for better responsiveness */
+  height: 40px;
+  box-decoration-break: none;
+  padding: 10px 10px 0 10px;
+}
+
+#newUserTitle,
+#newUserTitle,
+::placeholder {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+}
+
+input {
+  width: 100%;
+  height: 100%;
+}
+
+.newUserDropFile {
+  width: 80%; /* Adjust width for responsiveness */
+  height: 113px;
+  padding: 1%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 34px;
+  background-color: #eeeefa;
+}
+
+.home_saveBtn {
+  width: 88px;
+  height: 31px;
+  color: #fff;
+  display: flex;
+  position: absolute;
+  bottom: 32px; /* Adjust spacing for smaller screens */
+  align-items: center;
+  justify-content: center;
+  background-color: #4285f4;
+  border-radius: 5px;
+  cursor: pointer;
+  right: 10%; /* Use percentage for better responsiveness */
+}
+
+.home_saveBtn:hover {
+  border: 1px solid #4285f4;
+  background-color: #fff;
+  color: #4285f4;
+  box-sizing: border-box;
+}
+
+.home_deleteBtn {
+  width: 88px;
+  height: 31px;
+  color: #d14343;
+  display: flex;
+  position: absolute;
+  bottom: 32px; /* Adjust spacing for smaller screens */
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  right: 25%; /* Use percentage for better responsiveness */
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.home_deleteBtn:hover {
+  border: 1px solid #d14343;
+  box-sizing: border-box;
+}
+
+/* Role selection styles */
+.role-selection {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.role-option {
+  width: 15%; /* Adjust width for responsiveness */
+  text-align: center;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.role-option:hover {
+  background-color: #f0f0f0;
+}
+
+.role-option.selected {
+  background-color: #4285f4;
+  color: #fff;
+}
+
+/* Responsive Design: Smaller Screens */
+@media (max-width: 768px) {
+  .home_popupForUsers {
+    width: 90%; /* Make popup take up most of the screen width */
+    height: 50%;
+    padding: 40px;
+    border-radius: 1rem;
+    gap: 12px;
+  }
+
+  #newUserTitle {
+    width: 80%; /* Full width for input on smaller screens */
+  }
+
+  .newUserDropFile {
+    width: 100%; /* Adjust drop file area to fit */
+    height: auto;
+    gap: 16px;
+  }
+
+  .role-selection {
+    /* flex-direction: column; Stack roles vertically on smaller screens */
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .role-option {
+    width: 50%; /* Full width for roles */
+    padding: 12px;
+  }
+  .home_deleteBtn {
+    width: 88px;
+    margin-right: 10%;
+    height: 31px;
+    color: #d14343;
+    display: flex;
+    position: absolute;
+    bottom: 32px; /* Adjust spacing for smaller screens */
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    right: 25%; /* Use percentage for better responsiveness */
+    transition: 300ms;
+    cursor: pointer;
+  }
+}
