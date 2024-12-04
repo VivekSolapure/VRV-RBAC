@@ -19,9 +19,6 @@ function Navbar() {
           <div className="tabs">
             <Link to="/">Home</Link>
           </div>
-          <div className="tabs">
-            <Link to="/guide">How it Works</Link>
-          </div>
         </div>
         <div className="hamburger_menu" onClick={toggleMenu}>
           <div className="bar"></div>

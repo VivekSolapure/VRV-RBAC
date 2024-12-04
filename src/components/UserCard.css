@@ -148,4 +148,9 @@ color: #0056b3;
 .home_filters label {
     font-size: 14px;
 }
+.home_filters input {
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  }
 }
