@@ -51,6 +51,11 @@ function UserCard() {
             } else {
                 setIsPopupOpen(false);
             }
+            if (CreatepopupRef.current && CreatepopupRef.current.contains(event.target)) {
+                setIsCreatePopupOpen(true);
+            } else {
+                setIsCreatePopupOpen(false);
+            }
         }
 
         document.addEventListener('mousedown', handleClickOutside);
