@@ -6,25 +6,10 @@ import {
 } from "react-router-dom";
 import Home from './pages/Home';
 import Navbar from './components/Navbar';
-import { useEffect } from 'react';
+import HowItWorks from './pages/HowItWorks';
 
 
 function App() {
-
-  async function requestPermission(){
-    const permission= await Notification.requestPermission();
-    if (permission === 'granted'){
-      console.log("Permission granted");
-
-    }else if(permission === 'denied'){
-      console.log("Permission Denied");
-    }
-  }
-
-  useEffect(()=>{
-
-  },[])
-
 
   return (
     <>
@@ -32,6 +17,7 @@ function App() {
         <Navbar></Navbar>
         <Routes>
           <Route path='/' element={<Home/>}>Home</Route>
+          <Route path='/howitworks' element={<HowItWorks/>}>Home</Route>
         </Routes>
       </Router>
     </>
