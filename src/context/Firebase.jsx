@@ -3,7 +3,6 @@ import { initializeApp } from 'firebase/app'
 import { getDatabase, set, ref } from 'firebase/database'
 import { getStorage } from 'firebase/storage'
 import 'firebase/compat/database'
-import { getMessaging } from 'firebase/messaging/sw'
 // require('dotenv').config()
 
 const firebaseConfig = {
