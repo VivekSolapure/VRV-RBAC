@@ -5,7 +5,8 @@
   
   .steps {
     display: flex;
-    justify-content: space-around;
+    flex-wrap: wrap; /* Allows wrapping of steps */
+    justify-content: center; /* Center align on smaller screens */
     margin-top: 20px;
   }
   
@@ -16,6 +17,7 @@
     padding: 20px;
     text-align: center;
     width: 250px;
+    margin: 10px; /* Adds spacing between steps */
   }
   
   .step-number {
@@ -36,3 +38,32 @@
       transform: scale(1);
     }
   }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .step {
+      width: 200px; /* Reduce width for medium screens */
+      padding: 15px; /* Adjust padding */
+    }
+  
+    .step-number {
+      font-size: 28px; /* Adjust font size */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .step {
+      width: 100%; /* Full width for smaller screens */
+      padding: 10px; /* Adjust padding */
+    }
+  
+    .step-number {
+      font-size: 24px; /* Further reduce font size */
+    }
+  
+    .steps {
+      flex-direction: column; /* Stack steps vertically */
+      align-items: center; /* Center align items */
+    }
+  }
+  
