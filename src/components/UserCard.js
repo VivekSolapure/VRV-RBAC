@@ -4,7 +4,6 @@ import { child, get, ref, remove } from "firebase/database";
 import { database } from "../context/Firebase";
 import { useFirebase } from "../context/Firebase";
 import PopupForUsers from './PopupForUsers';
-import UserFilter from './User Management/UserFilter';
 
 function UserCard() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -19,10 +18,23 @@ function UserCard() {
     const [loading, setLoading] = useState(true);
     const popupRef = useRef(null);
     const searchBarRef = useRef(null);
-    const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
-    const CreatepopupRef = useRef(null);
 
     const firebase = useFirebase();
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (popupRef.current && popupRef.current.contains(event.target)) {
+                setIsPopupOpen(true);
+            } else {
+                setIsPopupOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const openPopup = (post) => {
         setWhichUserkey(post.key);
@@ -51,11 +63,6 @@ function UserCard() {
             } else {
                 setIsPopupOpen(false);
             }
-            if (CreatepopupRef.current && CreatepopupRef.current.contains(event.target)) {
-                setIsCreatePopupOpen(true);
-            } else {
-                setIsCreatePopupOpen(false);
-            }
         }
 
         document.addEventListener('mousedown', handleClickOutside);
@@ -67,7 +74,43 @@ function UserCard() {
 
     }, []);
 
+    const handleTxtTitleChange = (event) => {
+        setWhichUsertitle(event.target.value);
+    };
+
+    const handleRoleChange = (event) => {
+        setSelectedRole(event.target.value);
+    };
+
+    const handleRoleFilterChange = (role) => {
+        const updatedRoles = selectedRoles.includes(role)
+            ? selectedRoles.filter(r => r !== role)
+            : [...selectedRoles, role];
+
+        setSelectedRoles(updatedRoles);
+        applyFilters(updatedRoles, selectedStatuses);
+    };
+
+    const handleStatusFilterChange = (statusValue) => {
+        const updatedStatuses = selectedStatuses.includes(statusValue)
+            ? selectedStatuses.filter(s => s !== statusValue)
+            : [...selectedStatuses, statusValue];
+
+        setSelectedStatuses(updatedStatuses);
+        applyFilters(selectedRoles, updatedStatuses);
+    };
+
+    const handleSearchChange = (event) => {
+        const searchTerm = event.target.value.toLowerCase();
+        const filtered = Object.entries(postData).filter(([key, post]) => {
+            const nameMatch = post.title && post.title.toLowerCase().includes(searchTerm);
+            return nameMatch;
+        });
+        setFilteredData(Object.fromEntries(filtered));
+    };
+
     const applyFilters = (roles, statuses) => {
+        // If no filters are selected, show all data
         if (roles.length === 0 && statuses.length === 0 && !searchBarRef.current.value) {
             setFilteredData(postData);
             return;
@@ -75,6 +118,7 @@ function UserCard() {
 
         let filtered = Object.entries(postData);
 
+        // Apply name search filter
         if (searchBarRef.current.value) {
             filtered = filtered.filter(([key, post]) => {
                 const nameMatch = post.title && post.title.toLowerCase().includes(searchBarRef.current.value.toLowerCase());
@@ -82,6 +126,7 @@ function UserCard() {
             });
         }
 
+        // Apply role and status filters
         filtered = filtered.filter(([key, post]) => {
             const roleMatch = roles.length === 0 || roles.includes(post.role);
             const statusMatch = statuses.length === 0 || statuses.includes(post.status ? 'Active' : 'Inactive');
@@ -141,24 +186,82 @@ function UserCard() {
             alert("Failed to delete user. Please try again.");
         }
     };
+
+    const [isCreatePopupOpen, setIsCreatePopupOpen] = useState(false);
+    const CreatepopupRef = useRef(null);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (CreatepopupRef.current && !CreatepopupRef.current.contains(event.target)) {
+                setIsCreatePopupOpen(false);
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+    const CreateopenPopup = () => {
+        setIsCreatePopupOpen(true);
+    };
+
     return (
         <>
-            <UserFilter
-                selectedRoles={selectedRoles}
-                setSelectedRoles={setSelectedRoles}
-                selectedStatuses={selectedStatuses}
-                setSelectedStatuses={setSelectedStatuses}
-                handleSearchChange={(e) => {
-                    const searchTerm = e.target.value.toLowerCase();
-                    const filtered = Object.entries(postData).filter(([key, post]) => {
-                        const nameMatch = post.title && post.title.toLowerCase().includes(searchTerm);
-                        return nameMatch;
-                    });
-                    setFilteredData(Object.fromEntries(filtered));
-                }}
-                applyFilters={applyFilters}
-                searchBarRef={searchBarRef}
-            />
+            <div className="home_filters">
+                <input
+                    type="text"
+                    placeholder="Search by name"
+                    ref={searchBarRef}
+                    onChange={handleSearchChange}
+                />
+                <label>
+                    <input
+                        type="checkbox"
+                        value="Admin"
+                        onChange={() => handleRoleFilterChange("Admin")}
+                        checked={selectedRoles.includes("Admin")}
+                    />
+                    Admin
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        value="Editor"
+                        onChange={() => handleRoleFilterChange("Editor")}
+                        checked={selectedRoles.includes("Editor")}
+                    />
+                    Editor
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        value="Viewer"
+                        onChange={() => handleRoleFilterChange("Viewer")}
+                        checked={selectedRoles.includes("Viewer")}
+                    />
+                    Viewer
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        value="Active"
+                        onChange={() => handleStatusFilterChange("Active")}
+                        checked={selectedStatuses.includes("Active")}
+                    />
+                    Active
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        value="Inactive"
+                        onChange={() => handleStatusFilterChange("Inactive")}
+                        checked={selectedStatuses.includes("Inactive")}
+                    />
+                    Inactive
+                </label>
+            </div>
 
             {/* Existing popup and create popup components remain the same */}
             <div className={`home_popup ${isPopupOpen ? 'acticehome_popup' : ''}`}>
@@ -167,7 +270,7 @@ function UserCard() {
                         name="newUserTitle"
                         placeholder="Title"
                         id="newUserTitle"
-                        onChange={(e)=>{setWhichUsertitle(e.target.value);}}
+                        onChange={handleTxtTitleChange}
                         value={whichUsertitle}
                     ></textarea>
                     <div className="role-selection">
@@ -214,9 +317,9 @@ function UserCard() {
                                 <div className="home_UserHeading">
                                     <div className="home_UserName">{post.title}</div>
                                     <div className="home_UserEditLogo">
-                                        <div className="home_UserStatus">
-                                            {post.status ? "Active" : "Inactive"}
-                                        </div>
+                                    <div className="home_UserStatus">
+                                        {post.status ? "Active" : "Inactive"}
+                                    </div>
                                     </div>
                                 </div>
                                 <div className="home_UserPara">Role: {post.role || 'Not Assigned'}</div>
@@ -229,7 +332,7 @@ function UserCard() {
                         ))
                     )
                 )}
-                <div className="home_UsersList" onClick={()=>{setIsCreatePopupOpen(true);}}>
+                <div className="home_UsersList" onClick={CreateopenPopup}>
                     <div className="home_TodoListAddLogo"><img src="./addTask.svg" alt="" /></div>
                     <div className="home_TodoListAddTxt">Add User</div>
                 </div>
