@@ -45,6 +45,7 @@ function UserCard() {
                 setLoading(false);
             }
         };
+        fetchData();
         function handleClickOutside(event) {
             if (popupRef.current && popupRef.current.contains(event.target)) {
                 setIsPopupOpen(true);
