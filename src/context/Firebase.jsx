@@ -7,13 +7,13 @@ import { getMessaging } from 'firebase/messaging/sw'
 // require('dotenv').config()
 
 const firebaseConfig = {
-    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.REACT_APP_FIREBASE_APP_ID
+    apiKey:"AIzaSyBpFQFZU5AEEj-8KHgd-wtxFXSyLAQCZA0",
+    authDomain: "note-master-cc6f9.firebaseapp.com",
+    databaseURL: "https://note-master-cc6f9-default-rtdb.firebaseio.com",
+    projectId: "note-master-cc6f9",
+    storageBucket: "note-master-cc6f9.appspot.com",
+    messagingSenderId: "524060469383",
+    appId: "1:524060469383:web:a25dabf670f6b3b56bb022"
   };
 
 const firebaseApp = initializeApp(firebaseConfig);
