@@ -5,6 +5,7 @@
   /* justify-content: center; */
   flex-wrap: wrap;
   gap: 32px;
+  justify-content: center;
 }
 .home_UsersList {
   width: 260px;
