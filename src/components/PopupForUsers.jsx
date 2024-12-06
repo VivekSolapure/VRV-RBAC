@@ -3,14 +3,8 @@ import './PopupForUsers.css'
 import { useFirebase } from "../context/Firebase";
 
 function PopupForUsers() {
-  const [Post_textarea, setPost_textarea] = useState("");
   const [selectedRole, setSelectedRole] = useState('');
   const [status, setStatus] = useState(false);
-
-  const TxtChange = (event) => {
-    setPost_textarea(event.target.value);
-  };
-
   const [Post_txtTitle, setPost_txtTile] = useState("");
   const TxtTitle = (event) => {
     setPost_txtTile(event.target.value);
@@ -18,14 +12,6 @@ function PopupForUsers() {
 
   const firebase = useFirebase();
 
-  const openPopup = (post) => {
-    setSelectedRole(post.role || ''); // Set role if available
-  };
-
-
-  const handleRoleChange = (event) => {
-    setSelectedRole(event.target.value);
-  };
   const postDatas = async () => {
     let ccurrentDate = new Date();
     let monthNames = [

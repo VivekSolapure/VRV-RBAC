@@ -19,10 +19,6 @@ function Home() {
     };
   }, []);
 
-  const openPopup = () => {
-    setIsPopupOpen(true);
-  };
-
   return (
     <>
       <div className={`home_popup ${isPopupOpen ? 'acticehome_popup' : ''}`}>
